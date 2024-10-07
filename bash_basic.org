@@ -1,0 +1,270 @@
+* To Find files by their Size or Time  
+#+BEGIN_SRC bash
+  find . -type f or d -mtime -7 {here 7 means Days , f --> files , d --> Directory }
+  find . -type f or d -size +10M {here 10M means megabytes}
+  find . -type f -size +1M -delete --> to delete file of 1MB
+  find . -emtpy -delete --> to delete the empy fil 
+#+END_SRC
+
+
+* Text file management
+#+BEGIN_SRC bash
+  head -n #{to specify first lines to show} 10 file.txt --> this will show first 10 lines of any text file
+  less: use -N in less command to display line numbers and enter
+
+  wc(word-count): use wc command to see wrods lines bytes of a files before opening it
+	1. like wc -lwc files_name;
+  du: show disk usage of folder && files; du -k to show usage in kbs or -h to show it in kb or mb
+
+  send the error data to /dev/null to just simplify things up like this du -h file_name 2> /dev/null 
+
+
+  # by default it sorts according to alphabets
+  sort --> sort - r #(to reverse sort)
+	     sort -n #(to sort according to numbers)
+	     sort -c #(to check if file is sorted or not)
+	     sort -k #column_number (to sort from column number) --> Column number are arrays of string like ["Manveer" , "Singh"] so here column number 2 defines sort -k 2 mean sort this by second
+	     sort -u #file_name (to sort and remove duplicate ) 
+
+  uniq --> #delete duplicates from sort like this sort file_name | uniq
+	     uniq -d file_name #(to only find the duplicate in the file)
+
+	     #grep shoudn't be use on *BINARY DATA*
+  grep -F 'pattern' file_name #to find lines where pattern has been used;
+  [command] | grep -F 'pattern' #same thing but with pipe
+
+  #tr(translate)
+  echo 'bash' | tr 'b' 'd' #this command replace character
+  echo 'bash' | tr 'a-z' 'A-Z'
+  echo 'Manveer Singh' | tr -d ' ' #-d to delete character
+
+  #rev(reverse)
+  echo "Manveer Singh" | rev 
+
+
+
+  #To cut the bytes(character) to certain;
+  cut -b 1-10 #this will cut from 1st character to 10th
+  uptime | cut -b 1-10 #[starting_character] - [ending_character]
+  uptime | cut -b ' ' -f 2 #this cut the string into " "(spaces) and then -f tell which array-string to select --> this assusme that you have spaces in the string
+
+
+  #To replace string
+  sed 's/[which_word]/[To_word]/g'
+
+  #To modify the Path
+  PATH="${PATH}:/new/path/"
+
+
+
+  #TO change shell
+  chsh -s "/bin/zsh" #chsh --> change shell
+
+  #you can set alias
+  alias gohome="cd ~"
+  unalias gohome #to remove it from bash
+  #alias don't work , when we give parameter like this
+  ls='gohome' #alias are diable here
+
+
+
+
+  #to enable feature using SET
+  set - [feature]
+  #to disable feature using set
+  set + [feature]
+
+
+  #alternative to set is shopt , to enable
+  shopt -s [optioname]
+  shopt -s autocd #add cd before the path
+  shopt -s cdspell #correct spelling mistake in path 
+  #to disable
+  shopt -u [optioname]
+
+
+  #another variable PS1 (Prompt String 1)
+  echo "${PS1}" #By default [\u@\h \W\$]
+  #Username: \u , Hostname [complete hostname]{\H} , [until "."]{\h}
+  #Working directory \w(full path) , \W (last directory of the full path)
+  #time 24 hour format: \t , 12 hour format \@
+
+
+  #tell what type of terminal are availabe [default] --> xterm
+  toe
+  #TERM --> set terminal environment
+  echo "{TERM}"
+
+
+  #to change background and font color[ TERMINAL ESCAPE SEQUENCE]
+  #           FG(For Ground) BG(Back Ground)
+  echo -e "\e[36;41m"
+
+
+  #tell all the escape sequences
+  infocmp
+
+
+
+  tput clear
+
+  #to move cursor [verticaly] [horizontaly]
+  tput cup 5 20
+
+  #to create bold text
+  tput bold
+  #to reset file
+  tput sgr0
+
+  #to underline text
+  tput smul / tput rmul
+
+  #to setup color
+  tput setaf [color] #foreground color
+  tput setab [color] #background color
+
+  #how many lines and columns in visibal space can tput show
+  tput lines
+  tput cols
+  tput colors
+
+  #to use it in echo command
+  echo "$(tput bold) bold text $(tput sgr0)"
+
+
+  #to add escape sequences in bash
+  #use this \[ \]
+
+
+  #to get the length of the string use # of a variable
+  echo "${#HOME}"
+
+  #you can specify from where to which string
+  #          FROM  HOW MANY CHARACTERS   
+  echo "${HOME:30:30}"
+
+
+  #to replace string of variable
+  #user single / to replace one occurence // to replace all
+  echo "${HOME/home/users}" || echo "${HOME//home/users}"
+
+
+
+
+  echo data.{csv , txt} # this will expend as data.csv  data.txt
+  echo {A..Z} another way to imagine echo {START..END}
+
+
+
+  #command substituion
+  echo "`ls`" #this works same as
+  echo "$(ls)"
+
+
+
+  #simlinks
+  ln -s /of/which/path /your/folder/name
+  #to unlink it
+  unlink folder_name || file_name
+
+  #to create hardlink
+  ln  /of/which/path /your/folder/name
+  unlink folder_name;
+
+  #Copy file by hardlink
+  cp -al file_name #-a ensure that data will contain all the original metadata and l ensure that copy file will be hardlink
+
+
+  #to see the amount of inodes are in use
+  df -ih {i =  inodes h = human readable}
+#+END_SRC
+
+
+* Difference Between '' vs "";
+1. '' disables all expension like *.txt etc
+2. "" disables most of extension like *.txt but keep variable expension "${PWD}"
+
+
+** Different type of pseudo Devices
+1. /dev/null
+2. /dev/random
+3. /dev/urandom
+
+
+ * You can see cpuinfo by cat /proc/cpuinfo *
+ * Meminfo by cat /proc/meminfo *
+ * version cat /proc/version *
+ * uptime cat /proc/uptime *
+ * load average /proc/loadavg  // tells how many cores we are using , how many  processes*
+
+** So this is basically same
+#+BEGIN_SRC bash
+  [command] > file_name 2>&1 --> this &1 points to stdout , and we set it to file_name now it is pointing to file_name instead of terminal(default);
+  [command] 2> file_name >&2 --> this does them same but &2 points to error instead of output
+#+END_SRC
+
+
+
+
+* Linux Manages infomation in different files
+1. /etc/passwd --> _everything except password_
+2. /etc/shadow --> _store password encrypted_ || also store other dat too
+
+
+
+* User Management
+Use useradd command with these  
+1. -m: Create Home Directory
+2. -d: Set Custom Home Directory
+3. -s: Specify Default Shell
+4. -g: to specify primary group instead of default configuration
+5. -G: add user to secondary groups
+   
+Use passwd with these to change password
+1. -S: Display passwords status
+2. -d: delete password
+3. -n: set minimum password age(days)
+4. -x: set maximum password age (days)
+5. -l: Lock user account
+6. -u: Unlock user account
+
+Use usermod with these _need to go in different user to change these things_
+1. -c: change user description (full name)
+2. -s: change default shell
+3. -d: change home directory
+4. -l: change unix username
+5. -g: change primary group
+6. -G: change secondary groups
+7. -ag: add secondary groups 
+
+Use userdel command to delete existing user
+ 1. userdel [user_name]
+2. -r remove directory + mails
+3. -f do same of -r and force everything to delete
+
+
+** To show user groups type
+1. groups [username]
+   
+
+*** you will have to download these from package manager but in some distro these are available 
+1. to add user group you can use adduser with sudo
+   sudo adduser [user_name] [group]
+2. to remove user group you can use deluser with sudo
+   sudo deluser [user_name] [group]
+
+
+
+1. To add groups use
+   groupadd [options] groupname
+   1. -g: option to set custom GID
+      example: groupadd -g 1005 newgroup
+      the group info is then stored in the /etc/grouop file
+2. groupmod [options] groupname
+   -n: change the name of the group
+   -g: change the group id (GID)
+
+3. groupdel [group_name] , this will not delete the files created in it;
+   this will not remove primary groups 
+
+
