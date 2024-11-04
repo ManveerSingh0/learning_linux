@@ -208,7 +208,7 @@
 
 * Linux Manages infomation in different files
 1. /etc/passwd --> _everything except password_
-2. /etc/shadow --> _store password encrypted_ || also store other dat too
+2. /etc/shadow --> _store password encrypted_ || also store other data too
 
 
 
@@ -284,6 +284,16 @@ Use userdel command to delete existing user
    2. write (w):Add or remove files
       1. we also need execute for this  
    3. execute (x) Enter and raverse directory
+4. if you want to change permission for whole directory
+   1. chmod 777 -R ./directory
+   2. chown jannis:jannis -R ./directory 
+      
 
 ** chown
 1. chown user:group file.txt
+
+
+** Umask
+1. 666 for files , subtract value from it
+   777 for directories: Example umask 022 --> 666 - 022 -> 644 permission level
+2. 
