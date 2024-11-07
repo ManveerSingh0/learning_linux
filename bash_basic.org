@@ -3,7 +3,7 @@
   find . -type f or d -mtime -7 {here 7 means Days , f --> files , d --> Directory }
   find . -type f or d -size +10M {here 10M means megabytes}
   find . -type f -size +1M -delete --> to delete file of 1MB
-  find . -emtpy -delete --> to delete the empy fil 
+  find . -emtpy -delete --> to delete the empy file
 #+END_SRC
 
 
@@ -46,7 +46,7 @@
   #To cut the bytes(character) to certain;
   cut -b 1-10 #this will cut from 1st character to 10th
   uptime | cut -b 1-10 #[starting_character] - [ending_character]
-  uptime | cut -b ' ' -f 2 #this cut the string into " "(spaces) and then -f tell which array-string to select --> this assusme that you have spaces in the string
+  uptime | cut -d ' ' -f 2 #this cut the string into " "(spaces) and then -f tell which array-string to select --> this assusme that you have spaces in the string
 
 
   #To replace string
@@ -286,7 +286,17 @@ Use userdel command to delete existing user
    3. execute (x) Enter and raverse directory
 4. if you want to change permission for whole directory
    1. chmod 777 -R ./directory
-   2. chown jannis:jannis -R ./directory 
+   2. chown jannis:jannis -R ./directory
+5. To set sticky bit
+   1. chmod +t [folder]
+   2. chmod 1777 [folder] //here 1 before 777 works as sticky bit
+6. SUID = Set User ID
+   1. This don't support .cpp .c{executable scripts}
+   2. chmod u+s file
+      1. Lowercase s: SUID bit + execute bit
+      2. Uppercase S: Suid bit , but without execute bit
+      
+
       
 
 ** chown
@@ -296,4 +306,37 @@ Use userdel command to delete existing user
 ** Umask
 1. 666 for files , subtract value from it
    777 for directories: Example umask 022 --> 666 - 022 -> 644 permission level
-2. 
+2. You can set umask in /etc/login.defs {default value is 022}
+
+** Top
+1. -u [username]: show only process owned by the spedified user
+2. -d [seconds]: set the delay between display updates , in seconds
+   default is 3 seconds
+3. -i: processes only using CPU
+4. -c: display the full command line used to ostart each process
+5. f key: to customize normal top , using space key
+   - Sort by mem usage by using s key on the specific process
+6. k key: we can send signals to processes with the key (k = kill)
+7. r key: to renice NI
+8. z key: to make it colorfull
+   or Shift
+
+
+** PS
+1. ps -A {All} , ps -e
+   - show all process , from all uses and all sesions
+2. ps -f:
+   - show full format listing: show extended information ,
+     such as user, terminal and parent process (PPID)
+   - ps -ef: use it with  -e
+3. ps -f {PID} || ps -p -f {PID}: to be more specific and to see only one process
+4. ps -f --forest: show ascii character to make it more interesting(into resting hahaha)
+5. ps -l: shows something more
+
+** How Multitasking Works
+1. cat /proc/[process ID]/stats | grep ctxt --> single cpu core don't take multiple
+   tasks at same time and complete it same time , it complete first and then second and so on
+2. watch -n 0.5 grep -F "ctxt" /proc/12345/status
+   
+** Watch Command
+1. watch -n 0.5 grep -F "ctxt" /proc/12345/status
