@@ -332,6 +332,9 @@ Use userdel command to delete existing user
 3. ps -f {PID} || ps -p -f {PID}: to be more specific and to see only one process
 4. ps -f --forest: show ascii character to make it more interesting(into resting hahaha)
 5. ps -l: shows something more
+6. pgrep [program] --> to find process ID only
+   - pgrep -f firefox --> to show all PIDs of firefox and it's sub-processes
+   - pgrep -f $(pgrep firefox) --> use it like this 
 
 ** How Multitasking Works
 1. cat /proc/[process ID]/stats | grep ctxt --> single cpu core don't take multiple
@@ -340,3 +343,42 @@ Use userdel command to delete existing user
    
 ** Watch Command
 1. watch -n 0.5 grep -F "ctxt" /proc/12345/status
+   
+** Niceness
+1. -20 (highest priority) to +19 (lowest priority)
+2. nice -n [niceness] {-20..19} [program]
+3. renice -n {-20..19} [process ID] --> to change already running process
+
+* Systemd
+** Systemd
+-- systemd-analyze --system unit-paths --> To find those paths 
+1. /lib/systemd/system || /usr/lib/systemd/system --> system configuration
+2. /run/systemd/system --> runtime configuration
+3. /etc/systemd/system --> configuration for the administrator
+4. systemctl cat [file_name{this will show any file from anywhere}]
+5. systemctl list-units --> To display units
+6. systemctl status [service]
+7. systemctl {start , stop , restart , reload} [unit]
+
+* Mount/drive
+1. 
+
+** Grub
+1. sudo grub-mkconfig -o /boot/grub/grub.cfg --> to update grub bootloader in non-debain operating system
+2. emacs /etc/default/grub --> to customize grub
+
+
+- To list modules use sudo lsmod
+
+
+* Bash Script
+-- FUN FACT you can run script.jpeg file and write bash
+in it and you can run it without any problem  
+
+
+** Shebang
+- #(sharp) + !(bang) = shebang
+- #!/usr/bin/env bash --> To make portable
+
+
+
