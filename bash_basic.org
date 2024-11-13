@@ -349,6 +349,16 @@ Use userdel command to delete existing user
 2. nice -n [niceness] {-20..19} [program]
 3. renice -n {-20..19} [process ID] --> to change already running process
 
+** Process
+1. SIGINT (interrupt)
+2. SIGHUP (hangup)
+3. SIGWINCH (window change)
+4. SIGTERM (terminate)
+5. SIGKILL (kill process)
+6. SIGILL (illegal instruction)
+7. kill -s [Signal] [process-ID]
+   
+
 * Systemd
 ** Systemd
 -- systemd-analyze --system unit-paths --> To find those paths 
@@ -379,6 +389,3 @@ in it and you can run it without any problem
 ** Shebang
 - #(sharp) + !(bang) = shebang
 - #!/usr/bin/env bash --> To make portable
-
-
-
