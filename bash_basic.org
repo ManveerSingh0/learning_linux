@@ -350,6 +350,8 @@ Use userdel command to delete existing user
 3. renice -n {-20..19} [process ID] --> to change already running process
 
 ** Process
+- cat /proc/sys/kernal/pid_max --> To get maximum process can run by your system
+
 1. SIGINT (interrupt)
 2. SIGHUP (hangup)
 3. SIGWINCH (window change)
@@ -357,25 +359,50 @@ Use userdel command to delete existing user
 5. SIGKILL (kill process)
 6. SIGILL (illegal instruction)
 7. kill -s [Signal] [process-ID]
+-------------------------------------
+1. killall -s [SIGNAL] [process_name] --> killall -s SIGINT {firefox,emacs..}
+
+** Jbs and fg
+1. fg [%job-ID]
+2. fg [%job-ID] & || bg  [%job-ID] ; to run in background
+
+** stty
+1. stty -tostop || stty tostop
    
 
+** wait command
+1. wait [process ID]
+2. wait [%job ID]
+3. wait -n # wait till any job stop 
+   
 * Systemd
-** Systemd
--- systemd-analyze --system unit-paths --> To find those paths 
-1. /lib/systemd/system || /usr/lib/systemd/system --> system configuration
-2. /run/systemd/system --> runtime configuration
-3. /etc/systemd/system --> configuration for the administrator
-4. systemctl cat [file_name{this will show any file from anywhere}]
-5. systemctl list-units --> To display units
-6. systemctl status [service]
-7. systemctl {start , stop , restart , reload} [unit]
-
-* Mount/drive
-1. 
 
 ** Grub
 1. sudo grub-mkconfig -o /boot/grub/grub.cfg --> to update grub bootloader in non-debain operating system
 2. emacs /etc/default/grub --> to customize grub
+   
+
+** Systemd
+-- systemd-analyze --system unit-paths --> To find those paths 
+1. /lib/systemd/system || /usr/lib/systemd/system --> system configuration
+2. /run/systemd/system --> runtime configuration {out data get lost after reboot}
+3. /etc/systemd/system --> configuration for the administrator
+4. systemctl cat [file_name{this will show any file from anywhere}]
+5. systemctl list-units --> To display units
+6. systemctl status [unit]
+7. systemctl {start , stop , restart , reload} [unit]
+8. systemd-cgtop {to inspect cgroups process like ps -elf}
+   1. --depth=5 to show more cgroups
+9. User Location -->  ~/.config/systemd/user/extension.slice {to create cgroup}
+   System Location --> /etc/systemd/system/
+   1. [Slice] MemoryHigh=100M
+   2. systemd-run --user --slice=extension.slice /usr/bin/okular --> user or system & which slice & app name 
+   
+
+* Mount/drive
+1. 
+
+
 
 
 - To list modules use sudo lsmod
