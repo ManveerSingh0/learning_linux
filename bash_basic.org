@@ -396,8 +396,50 @@ Use userdel command to delete existing user
 9. User Location -->  ~/.config/systemd/user/extension.slice {to create cgroup}
    System Location --> /etc/systemd/system/
    1. [Slice] MemoryHigh=100M
-   2. systemd-run --user --slice=extension.slice /usr/bin/okular --> user or system & which slice & app name 
+   2. systemd-run --user --slice=extension.slice /usr/bin/okular --> user or system & which slice & app name
+10. systemctl  --user daemon-reload
+11. sudo systemctl get-default --> to get current running target
+12. sudo systemctl isolate [target_name] --> to switch between targets
+13. sudo systemctl list-units --type targets --all
+14. sudo systemctl set-default [target_name] --> to change default target
+15. sudo systemctl enable --now {apache2.service || any service name} --> to enable any service
+16. sudo systemctl stop [service_name] || sudo systemctl disable [service_name]
+17. To do changes in service file cp /lib/systemd/systemd/[service_name].service /etc/systemd/system
+18. sudo systemctl edit [servic_name]
+19. sudo systemctl is-enabled [service_name]
+20. sudo systemctl list-timers
+21. systemd-analyze timestamp now
+22. systemd-analyze calendar
+
+
+
+
+*** Unit Files
+1. Keywords in unit file to use
+   - Description {as name says} 
+   - Documentation
+   - Requires{is needed together}
+   - Wants {if not present don't give a fu*k}
+   - After {this service should start after these defined services}
+   - Before{this service should start before these defined services}
+   - AllowIsolate {to switch targets using isolate command}
+     
+
+*** Service Files
+1. Keywordsd in unit file to use
+   [[https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_systemd_unit_files_to_customize_and_optimize_your_system/assembly_working-with-systemd-unit-files_working-with-systemd#ref_important-service-section-options_assembly_working-with-systemd-unit-files][you can see furthur documentation about it here]]
    
+* Journald
+1. journalctl --> to show all boot log files
+2. journalctl -b --> to shw current boot files
+3. journalctl --list-boots --> shows only boot logs
+   1. journalctl -b [list-boots number]
+4. journalctl -u <unit_name> --> shows logs of unit
+5. journalctl -u [service_name] --since '2023-04-18' --until '2024-04-19'
+6. journalctl -r [service_name] --> reverce the output
+7. journalctl -f [service_name] --> follow logs in real time
+8. echo 'journald is amazing' | systemd-cat --> to send message in journalct log
+
 
 * Mount/drive
 1. 
