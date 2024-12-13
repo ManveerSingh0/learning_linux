@@ -453,7 +453,26 @@ Use userdel command to delete existing user
 1. External --> /media && Internal --> /mnt
 2. lsblk -f --> list our non-mounted or mounted disks
 3. mount /dev/sdb1 /mnt/backups
-
+4. mount -t ext4 /dev/sdb1 /mnt/backups {-t specify file system manually}
+5. mount -o ro ext4 /dev/sdb1 /mnt backups
+   1. ro: read only{even root user can't write in it}
+   2. rw: read and write
+   3. noexec: disable execution
+   4. nosuid: disable set-user-identifier
+   5. noatime: do not update access time when file is read
+   6. man mount
+6. mount or  df -h
+7. /etc/fstab
+   1. Device identifier(UUID)
+   2. mount point
+   3. filesystem type
+   4. mount options
+      1. rw, suid , dev , exec, auto , nouser and async
+   5. dump option
+   6. file system check order
+      1. priority --> 1 = root , 2 = non-root {lower the number higher the priority}
+8. smartmontools
+   1. smartctl --all /dev/sda
 
 
 - to list modules use sudo lsmod
