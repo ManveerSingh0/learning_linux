@@ -432,7 +432,7 @@ Use userdel command to delete existing user
    
 * Journald
 1. journalctl --> to show all boot log files
-2. journalctl -b --> to shw current boot files
+2. journalctl -b --> to show current boot files
 3. journalctl --list-boots --> shows only boot logs
    1. journalctl -b [list-boots number]
 4. journalctl -u <unit_name> --> shows logs of unit
@@ -443,12 +443,20 @@ Use userdel command to delete existing user
 
 
 * Mount/drive
-1. 
+** Parted
+1. print partition
+2. print devices
+3. select /dev/sdb | you can see after print devices it
+4. mklabel | to create new lable {this will erase all data on that disk}
+
+** Mount
+1. External --> /media && Internal --> /mnt
+2. lsblk -f --> list our non-mounted or mounted disks
+3. mount /dev/sdb1 /mnt/backups
 
 
 
-
-- To list modules use sudo lsmod
+- to list modules use sudo lsmod
 
 
 * Bash Script
